@@ -1,6 +1,6 @@
 { callPackage ? pkgs.callPackage
 , pkgs ? import sources.nixpkgs { inherit system; config = {}; overlays = []; },
-, sources ? import ../../npins,
+, sources ? import ../../../npins,
 }:
 
 let
@@ -12,9 +12,8 @@ let
     postgresql = pkgs.postgresql_14;
     version = 14;
   };
+
+  miniconda = pkgs.callPackage ./miniconda { };
+  pantsbuild = pkgs.callPackage ./pantsbuild { };
 in
-{
-  miniconda = (callPackage ./miniconda { });
-  pantsbuild = (callPackage ./pantsbuild { });
-  inherit postgresql_12 postgresql_14;
-}
+{ inherit miniconda pantsbuild postgresql_12 postgresql_14; }
